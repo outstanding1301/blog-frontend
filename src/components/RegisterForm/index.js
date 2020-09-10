@@ -89,7 +89,9 @@ const RegisterForm = (props) => {
             username: username,
             password: pw,
             email: email,
-            nickname: nickname
+            nickname: nickname,
+        }, {
+            withCredentials: true
         }).then(data => {
             console.log(data.data);
             alert(data.data.data);

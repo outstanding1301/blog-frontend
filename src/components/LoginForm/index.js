@@ -25,6 +25,8 @@ const LoginForm = (props) => {
         axios.post(api+'/login', {
             id: id,
             password: pw
+        }, {
+            withCredentials: true
         }).then(data => {
             console.log(data.data);
             alert(data.data.data);
@@ -43,7 +45,7 @@ const LoginForm = (props) => {
 
     return (
         <Fragment>
-            <div className="login_background"></div>
+            {/* <div className="login_background"></div> */}
             <div className="login_frame">
                 <div className="login_title_container">
                     <p className="login_register">아직 계정이 없으세요?</p>
