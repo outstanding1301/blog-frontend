@@ -29,8 +29,11 @@ const LoginForm = (props) => {
             console.log(data.data);
             alert(data.data.data);
         }).catch(err => {
-            console.error(err.response.data);
-            alert(err.response.data.data);
+            console.error(err);
+            if(err.response)
+                alert(err.response.data.data);
+            else
+                alert(err);
         })
     }
 

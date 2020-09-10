@@ -85,7 +85,7 @@ const RegisterForm = (props) => {
 
     const onClickRegister = (e) => {
         let pw = crypto.pbkdf2Sync(password, salt, 112, 64, 'sha512').toString('base64');
-        axios.post(api+'/user', {
+        axios.post(api+'/register', {
             username: username,
             password: pw,
             email: email,
@@ -158,7 +158,7 @@ const RegisterForm = (props) => {
                         <div className="control has-icons-left has-icons-right">
                             <input className={`input ${(checkValidNickname().length === 0 ? "" : "is-danger")}`} type="text" placeholder="닉네임을 입력하세요." value={nickname} onChange={onInputNickname}/>
                             <span className="icon is-small is-left">
-                                <i className="far fa-grin-tongue-squint"></i>
+                                <i className="farte fa-grin-tongue-squint"></i>
                             </span>
                             <span key={Math.random()} className="icon is-small is-right">
                                 <i className={(checkValidNickname().length === 0 ? "fas fa-check" : "fas fa-exclamation-triangle")}></i>
