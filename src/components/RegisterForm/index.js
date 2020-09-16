@@ -4,9 +4,9 @@ import {api, salt} from '../../consts';
 import crypto from 'crypto';
 import './style.scss';
 import { useHistory } from 'react-router-dom';
+import InputAndHint from '../common/InputAndHint';
 
 const reducer = (state, action) => {
-    console.log('reducer');
     return {
         ...state,
         [action.name]: action.value
@@ -43,7 +43,6 @@ const RegisterForm = (props) => {
     }, []);
 
     const checkValidUsername = useCallback(() => {
-        console.log('username');
         if(username.length < 3) {
             return 'Username이 너무 짧습니다.';
         }
@@ -55,7 +54,6 @@ const RegisterForm = (props) => {
     }, [username]);
 
     const checkValidEmail = useCallback(() => {
-        console.log('email');
         if(email.length < 3) {
             return 'E-mail이 너무 짧습니다.';
         }
@@ -69,7 +67,6 @@ const RegisterForm = (props) => {
     }, [email]);
 
     const checkValidPassword = useCallback(() => {
-        console.log('pw');
         if(password.length < 6) {
             return '비밀번호는 6자리 ~ 20자리 이내로 입력해주세요.';
         }
@@ -83,7 +80,6 @@ const RegisterForm = (props) => {
     }, [password]);
 
     const checkValidNickname = useCallback(() => {
-        console.log('nick');
         if(nickname.length < 1) {
             return '닉네임이 너무 짧습니다.';
         }
@@ -131,61 +127,11 @@ const RegisterForm = (props) => {
                 </div>
 
                 <div className="register_form_container">
-                    <div className="field">
-                        <label className="label">E-mail<span className="necessary">*</span></label>
-                        <div className="control has-icons-left has-icons-right">
-                            <input name="email" className={`input ${(checkEmailMemo.length === 0 ? "" : "is-danger")}`} type="text" placeholder="E-mail을 입력하세요." value={email} onChange={onHandleChange}/>
-                            <span className="icon is-small is-left">
-                                <i className="fas fa-envelope"></i>
-                            </span>
-                            <span key={Math.random()} className="icon is-small is-right">
-                                <i className={(checkEmailMemo.length === 0 ? "fas fa-check" : "fas fa-exclamation-triangle")}></i>
-                            </span>
-                        </div>
-                        <p className="help is-danger"> {checkEmailMemo}</p>
-                    </div>
-                    <div className="field">
-                        <label className="label">Username<span className="necessary">*</span></label>
-                        <div className="control has-icons-left has-icons-right">
-                            <input name="username" className={`input ${(checkUsernameMemo.length === 0 ? "" : "is-danger")}`} type="text" placeholder="Username을 입력하세요." value={username} onChange={onHandleChange}/>
-                            <span className="icon is-small is-left">
-                                <i className="fas fa-user"></i>
-                            </span>
-                            <span key={Math.random()} className="icon is-small is-right">
-                                <i className={(checkUsernameMemo.length === 0 ? "fas fa-check" : "fas fa-exclamation-triangle")}></i>
-                            </span>
-                        </div>
-                        <p className="help is-danger"> {checkUsernameMemo}</p>
-                    </div>
-                    <div className="field">
-                        <label className="label">비밀번호<span className="necessary">*</span></label>
-                        <div className="control has-icons-left has-icons-right">
-                            <input name="password" className={`input ${(checkPasswordMemo.length === 0 ? "" : "is-danger")}`} type="password" placeholder="비밀번호를 입력하세요." value={password} onChange={onHandleChange}/>
-                            <span className="icon is-small is-left">
-                                <i className="fas fa-key"></i>
-                            </span>
-                            <span key={Math.random()} className="icon is-small is-right">
-                                <i className={(checkPasswordMemo.length === 0 ? "fas fa-check" : "fas fa-exclamation-triangle")}></i>
-                            </span>
-                        </div>
-                        <p className="help is-danger"> {checkPasswordMemo}</p>
-                    </div>
-                    <div className="field">
-                        <label className="label">닉네임<span className="necessary">*</span></label>
-                        <div className="control has-icons-left has-icons-right">
-                            <input name="nickname" className={`input ${(checkNicknameMemo.length === 0 ? "" : "is-danger")}`} type="text" placeholder="닉네임을 입력하세요." value={nickname} onChange={onHandleChange}/>
-                            <span className="icon is-small is-left">
-                                <i className="farte fa-grin-tongue-squint"></i>
-                            </span>
-                            <span key={Math.random()} className="icon is-small is-right">
-                                <i className={(checkNicknameMemo.length === 0 ? "fas fa-check" : "fas fa-exclamation-triangle")}></i>
-                            </span>
-                        </div>
-                        <p className="help is-danger"> {checkNicknameMemo}</p>
-                    </div>
-                    
+                    <InputAndHint name="email" label="E-mail" type="text" value={email} necessary iconLeft="fas fa-envelope" placeHolder="E-mail을 입력하세요." memo={checkEmailMemo} onChange={onHandleChange}/>
+                    <InputAndHint name="username" label="Username" type="text" value={username} necessary iconLeft="fas fa-user" placeHolder="Username을 입력하세요." memo={checkUsernameMemo} onChange={onHandleChange}/>
+                    <InputAndHint name="password" label="비밀번호" type="password" value={password} necessary iconLeft="fas fa-key" placeHolder="비밀번호를 입력하세요." memo={checkPasswordMemo} onChange={onHandleChange}/>
+                    <InputAndHint name="nickname" label="닉네임" type="text" value={nickname} necessary iconLeft="far fa-grin-tongue-squint" placeHolder="닉네임을 입력하세요." memo={checkNicknameMemo} onChange={onHandleChange}/>
                     <button className={`button is-link register_button`} disabled={checkEmailMemo.length+checkNicknameMemo.length+checkPasswordMemo.length+checkUsernameMemo.length !== 0} onClick={onClickRegister}>회원가입</button>
-                    {/* <button className="button is-link is-inverted register_register_button" onClick={onClickLogin}>로그인</button> */}
                 </div>
             </div>
         </Fragment>
