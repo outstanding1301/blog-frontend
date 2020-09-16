@@ -1,24 +1,30 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useReducer, useCallback } from 'react';
 import axios from 'axios';
 import {api, salt} from '../../consts';
 import crypto from 'crypto';
 import './style.scss';
 import { useHistory } from 'react-router-dom';
 
+const reducer = (state, action) => {
+    console.log('reducer');
+    return {
+        ...state,
+        [action.name]: action.value
+    }
+}
 const LoginForm = (props) => {
-    
     const history = useHistory();
 
-    const [id, setId] = useState('');
-    const [password, setPassword] = useState('');
+    const [state, dispatch] = useReducer(reducer, {
+        id: '',
+        password: ''
+    });
 
-    const onInputId = (e) => {
-        setId(e.target.value);
-    }
+    const {id, password} = state;
 
-    const onInputPassword = (e) => {
-        setPassword(e.target.value);
-    }
+    const onHandleChange = useCallback(e => {
+        dispatch(e.target);
+    }, []);
 
     const onClickLogin = (e) => {
         let pw = crypto.pbkdf2Sync(password, salt, 112, 64, 'sha512').toString('base64');
@@ -39,9 +45,9 @@ const LoginForm = (props) => {
         })
     }
 
-    const onClickRegister = (e) => {
+    const onClickRegister = useCallback((e) => {
         history.push('/register');
-    }
+    }, []);
 
     return (
         <Fragment>
@@ -56,7 +62,7 @@ const LoginForm = (props) => {
                     <div className="field">
                         <label className="label">Username 또는 이메일</label>
                         <div className="control has-icons-left">
-                            <input className={`input`} type="text" placeholder="Username or E-mail" value={id} onChange={onInputId}/>
+                            <input className={`input`} type="text" placeholder="Username or E-mail" value={id} onChange={onHandleChange}/>
                             <span className="icon is-small is-left">
                                 <i className="fas fa-user"></i>
                             </span>
@@ -65,7 +71,7 @@ const LoginForm = (props) => {
                     <div className="field">
                         <label className="label">비밀번호</label>
                         <div className="control has-icons-left">
-                            <input className={`input`} type="password" placeholder="Password" value={password} onChange={onInputPassword}/>
+                            <input className={`input`} type="password" placeholder="Password" value={password} onChange={onHandleChange}/>
                             <span className="icon is-small is-left">
                                 <i className="fas fa-key"></i>
                             </span>

@@ -1,4 +1,4 @@
-import React, { Fragment, useCallback, useMemo, useReducer, useState } from 'react';
+import React, { Fragment, useCallback, useMemo, useReducer } from 'react';
 import axios from 'axios';
 import {api, salt} from '../../consts';
 import crypto from 'crypto';
@@ -14,9 +14,7 @@ const reducer = (state, action) => {
 }
 
 const RegisterForm = (props) => {
-    
     const history = useHistory();
-
     const [state, dispatch] = useReducer(reducer, {
         username: '',
         nickname: '',
@@ -25,33 +23,6 @@ const RegisterForm = (props) => {
     });
 
     const {username, nickname, email, password} = state;
-
-    // const [username, setUsername] = useState('');
-    // const [nickname, setNickname] = useState('');
-    // const [email, setEmail] = useState('');
-    // const [password, setPassword] = useState('');
-
-    // const onInputUsername = (e) => {
-    //     e.target.value = e.target.value.replace(/[^a-z0-9_]/gi, '');
-    //     if(e.target.value.length <= 15) 
-    //         setUsername(e.target.value);
-    // }
-
-    // const onInputNickname = (e) => {
-    //     if(e.target.value.length <= 15) 
-    //         setNickname(e.target.value);
-    // }
-
-    // const onInputEmail = (e) => {
-    //     if(e.target.value.length <= 50) 
-    //         setEmail(e.target.value);
-    // }
-
-    // const onInputPassword = (e) => {
-    //     e.target.value = e.target.value.replace(/\s/, '');
-    //     if(e.target.value.length <= 20) 
-    //         setPassword(e.target.value);
-    // }
 
     const onHandleChange = useCallback(e => {
         if(e.target.name === 'username') {
@@ -77,7 +48,7 @@ const RegisterForm = (props) => {
             return 'Username이 너무 짧습니다.';
         }
 
-        if(username.search(/\s/) == 0) {
+        if(username.search(/\s/) === 0) {
             return 'Username에 공백을 포함할 수 없습니다.';
         }
         return '';
@@ -88,7 +59,7 @@ const RegisterForm = (props) => {
         if(email.length < 3) {
             return 'E-mail이 너무 짧습니다.';
         }
-        if(email.search(/\s/) == 0) {
+        if(email.search(/\s/) === 0) {
             return 'E-mail에 공백을 포함할 수 없습니다.';
         }
         if(!/^([0-9a-zA-Z_\.-]+)@([0-9a-zA-Z_-]+)(\.[0-9a-zA-Z_-]+){1,2}$/.test(email)) {
@@ -102,7 +73,7 @@ const RegisterForm = (props) => {
         if(password.length < 6) {
             return '비밀번호는 6자리 ~ 20자리 이내로 입력해주세요.';
         }
-        if(password.search(/\s/) == 0) {
+        if(password.search(/\s/) === 0) {
             return '비밀번호에 공백을 포함할 수 없습니다.';
         }
         if(password.search(/[0-9]/g) < 0 || password.search(/[a-zA-Z]/gi) < 0) {
