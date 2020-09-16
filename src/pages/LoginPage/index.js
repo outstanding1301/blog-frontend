@@ -1,11 +1,12 @@
 import React from 'react';
-import './style.css';
+import './style.scss';
 import LoginForm from '../../components/LoginForm';
+import {api, salt} from '../../consts';
 import axios from 'axios';
 
 function LoginPage() {
   const loginTest = () => {
-    axios.get('http://192.168.123.101:8080/test', {
+    axios.get('http://localhost:8080'+'/test', {
       withCredentials: true
     }).then(data => {
         console.log(data.data);

@@ -10,6 +10,12 @@ const HomePage = (props) => {
                 <br/>
                 <a href="/register">Register Page</a>
                 <br/>
+                <a href="/write">Write Post Page</a>
+                <br/>
+                <a href="/@outstandingboy/0">Post Page</a>
+                <br/>
+                <a href="/@outstandingboy">Post List Page</a>
+                <br/>
             </h1>
         </div>
     )

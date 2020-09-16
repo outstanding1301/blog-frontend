@@ -2,7 +2,7 @@ import React, { Fragment, useState } from 'react';
 import axios from 'axios';
 import {api, salt} from '../../consts';
 import crypto from 'crypto';
-import './style.css';
+import './style.scss';
 import { useHistory } from 'react-router-dom';
 
 const LoginForm = (props) => {
@@ -22,7 +22,7 @@ const LoginForm = (props) => {
 
     const onClickLogin = (e) => {
         let pw = crypto.pbkdf2Sync(password, salt, 112, 64, 'sha512').toString('base64');
-        axios.post(api+'/login', {
+        axios.post(api+'/auth/login', {
             id: id,
             password: pw
         }, {

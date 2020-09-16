@@ -6,10 +6,7 @@ import Root from './client/Root';
 import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
-  <React.StrictMode>
-    <Root />
-  </React.StrictMode>,
-  document.getElementById('root')
+    <Root />, document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change
