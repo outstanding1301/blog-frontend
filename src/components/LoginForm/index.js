@@ -1,4 +1,6 @@
-import React, { Fragment, useReducer, useCallback } from 'react';
+import React, { Fragment, useEffect, useCallback } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { changeField, initializeForm } from '../../modules/auth';
 import axios from 'axios';
 import {api, salt} from '../../consts';
 import crypto from 'crypto';
@@ -6,30 +8,30 @@ import './style.scss';
 import { useHistory } from 'react-router-dom';
 import InputAndHint from '../common/InputAndHint';
 
-const reducer = (state, action) => {
-    return {
-        ...state,
-        [action.name]: action.value
-    }
-}
 const LoginForm = (props) => {
     const history = useHistory();
-
-    const [state, dispatch] = useReducer(reducer, {
-        id: '',
-        password: ''
-    });
-
-    const {id, password} = state;
+    const dispatch = useDispatch();
+    
+    // const { form } = useSelector(({auth}) => ({
+    //     form: auth.login
+    // }));
+    const form = useSelector(state => state.auth.login);
 
     const onHandleChange = useCallback(e => {
-        dispatch(e.target);
+        const { value, name } = e.target;
+        dispatch(
+            changeField({
+                form: 'login',
+                key: name,
+                value
+            })
+        );
     }, []);
 
-    const onClickLogin = (e) => {
-        let pw = crypto.pbkdf2Sync(password, salt, 112, 64, 'sha512').toString('base64');
+    const onSubmit = (e) => {
+        let pw = crypto.pbkdf2Sync(form.password, salt, 112, 64, 'sha512').toString('base64');
         axios.post(api+'/auth/login', {
-            id: id,
+            id: form.id,
             password: pw
         }, {
             withCredentials: true
@@ -45,6 +47,10 @@ const LoginForm = (props) => {
         })
     }
 
+    useEffect(() => {
+        dispatch(initializeForm('login'));
+    }, [dispatch]);
+
     const onClickRegister = useCallback((e) => {
         history.push('/register');
     }, []);
@@ -59,10 +65,10 @@ const LoginForm = (props) => {
                     <h2 className="login_title_text">로그인</h2>
                 </div>
                 <div className="login_form_container">
-                    <InputAndHint name="id" label="Username 또는 이메일" type="text" value={id} iconLeft="fas fa-user" placeHolder="Username 또는 E-mail을 입력하세요." onChange={onHandleChange}/>
-                    <InputAndHint name="password" label="비밀번호" type="password" value={password} iconLeft="fas fa-key" placeHolder="비밀번호를 입력하세요." onChange={onHandleChange}/>
+                    <InputAndHint name="id" label="Username 또는 이메일" type="text" value={form.id} iconLeft="fas fa-user" placeHolder="Username 또는 E-mail을 입력하세요." onChange={onHandleChange}/>
+                    <InputAndHint name="password" label="비밀번호" type="password" value={form.password} iconLeft="fas fa-key" placeHolder="비밀번호를 입력하세요." onChange={onHandleChange}/>
                     
-                    <button className="button is-link login_button" onClick={onClickLogin}>로그인</button>
+                    <button className="button is-link login_button" onClick={onSubmit}>로그인</button>
                 </div>
             </div>
         </Fragment>

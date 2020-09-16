@@ -2,11 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import Root from './client/Root';
-// import Login from './pages/Login';
 import * as serviceWorker from './serviceWorker';
 
+import { Provider } from 'react-redux';
+import { createStore } from 'redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import rootReducer from './modules';
+
+const store = createStore(rootReducer, composeWithDevTools());
+
 ReactDOM.render(
-    <Root />, document.getElementById('root')
+  <Provider store={store}>
+    <Root />
+  </Provider>, 
+  document.getElementById('root')
 );
 
 // If you want your app to work offline and load faster, you can change

@@ -1,28 +1,25 @@
-import React, { Fragment, useCallback, useMemo, useReducer } from 'react';
+import React, { Fragment, useCallback, useMemo, useEffect } from 'react';
 import axios from 'axios';
 import {api, salt} from '../../consts';
 import crypto from 'crypto';
 import './style.scss';
 import { useHistory } from 'react-router-dom';
 import InputAndHint from '../common/InputAndHint';
-
-const reducer = (state, action) => {
-    return {
-        ...state,
-        [action.name]: action.value
-    }
-}
+import { useDispatch, useSelector } from 'react-redux';
+import { changeField, initializeForm } from '../../modules/auth';
 
 const RegisterForm = (props) => {
     const history = useHistory();
-    const [state, dispatch] = useReducer(reducer, {
-        username: '',
-        nickname: '',
-        email: '',
-        password: ''
-    });
+    
+    const dispatch = useDispatch();
+    // const {form} = useSelector(({auth}) => ({
+    //     form: auth.register
+    // }));
 
-    const {username, nickname, email, password} = state;
+    const form = useSelector(state => state.auth.register);
+    console.log(form);
+
+    const {username, nickname, email, password, passwordConfirm} = form;
 
     const onHandleChange = useCallback(e => {
         if(e.target.name === 'username') {
@@ -35,11 +32,19 @@ const RegisterForm = (props) => {
         else if(e.target.name === 'email') {
             if(e.target.value.length > 50) return;
         }
-        else if(e.target.name === 'password') {
+        else if(e.target.name === 'password' || e.target.name === 'passwordConfirm') {
             e.target.value = e.target.value.replace(/\s/, '');
             if(e.target.value.length > 20) return;
         }
-        dispatch(e.target);
+        const {name, value} = e.target;
+        dispatch(
+            changeField(
+            {
+                form: 'register',
+                key: name,
+                value
+            }
+        ));
     }, []);
 
     const checkValidUsername = useCallback(() => {
@@ -79,6 +84,13 @@ const RegisterForm = (props) => {
         return '';
     }, [password]);
 
+    const checkValidPasswordConfirm = useCallback(() => {
+        if(password !== passwordConfirm) {
+            return '비밀번호를 다시 확인해주세요.';
+        }
+        return '';
+    }, [password, passwordConfirm]);
+
     const checkValidNickname = useCallback(() => {
         if(nickname.length < 1) {
             return '닉네임이 너무 짧습니다.';
@@ -107,6 +119,10 @@ const RegisterForm = (props) => {
         })
     };
 
+    useEffect(() => {
+        dispatch(initializeForm('register'));
+    }, [dispatch]);
+
     const onClickLogin = useCallback((e) => {
         history.push('/login');
     }, []);
@@ -114,6 +130,7 @@ const RegisterForm = (props) => {
     const checkEmailMemo = useMemo(() => checkValidEmail(), [email]);
     const checkUsernameMemo = useMemo(() => checkValidUsername(), [username]);
     const checkPasswordMemo = useMemo(() => checkValidPassword(), [password]);
+    const checkPasswordConfirmMemo = useMemo(() => checkValidPasswordConfirm(), [password, passwordConfirm]);
     const checkNicknameMemo = useMemo(() => checkValidNickname(), [nickname]);
 
     return (
@@ -130,8 +147,9 @@ const RegisterForm = (props) => {
                     <InputAndHint name="email" label="E-mail" type="text" value={email} necessary iconLeft="fas fa-envelope" placeHolder="E-mail을 입력하세요." memo={checkEmailMemo} onChange={onHandleChange}/>
                     <InputAndHint name="username" label="Username" type="text" value={username} necessary iconLeft="fas fa-user" placeHolder="Username을 입력하세요." memo={checkUsernameMemo} onChange={onHandleChange}/>
                     <InputAndHint name="password" label="비밀번호" type="password" value={password} necessary iconLeft="fas fa-key" placeHolder="비밀번호를 입력하세요." memo={checkPasswordMemo} onChange={onHandleChange}/>
+                    <InputAndHint name="passwordConfirm" label="비밀번호 확인" type="password" value={passwordConfirm} necessary iconLeft="fas fa-key" placeHolder="비밀번호를 다시 입력하세요." memo={checkPasswordConfirmMemo} onChange={onHandleChange}/>
                     <InputAndHint name="nickname" label="닉네임" type="text" value={nickname} necessary iconLeft="far fa-grin-tongue-squint" placeHolder="닉네임을 입력하세요." memo={checkNicknameMemo} onChange={onHandleChange}/>
-                    <button className={`button is-link register_button`} disabled={checkEmailMemo.length+checkNicknameMemo.length+checkPasswordMemo.length+checkUsernameMemo.length !== 0} onClick={onClickRegister}>회원가입</button>
+                    <button className={`button is-link register_button`} disabled={checkEmailMemo.length+checkNicknameMemo.length+checkPasswordMemo.length+checkUsernameMemo.length+checkPasswordConfirmMemo.length !== 0} onClick={onClickRegister}>회원가입</button>
                 </div>
             </div>
         </Fragment>

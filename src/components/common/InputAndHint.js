@@ -4,7 +4,7 @@ const InputAndHint = (props) => {
     if (props.memo) {
         return (
             <div className="field">
-                <label className="label">{props.label}{(()=>{if (props.necessary) return <span className="necessary">*</span>; return undefined})()}</label>
+                <label className="label">{props.label}{props.necessary && <span className="necessary">*</span>}</label>
                 <div className="control has-icons-left has-icons-right">
                     <input name={props.name} className={`input ${(props.memo.length === 0 ? "" : "is-danger")}`} type={props.type} placeholder={props.placeHolder} value={props.value} onChange={props.onChange}/>
                     <span className="icon is-small is-left">
@@ -20,7 +20,7 @@ const InputAndHint = (props) => {
     }
     return (
         <div className="field">
-            <label className="label">{props.label}{(()=>{if (props.necessary) return <span className="necessary">*</span>; return undefined})()}</label>
+            <label className="label">{props.label}{props.necessary && <span className="necessary">*</span>}</label>
             <div className="control has-icons-left">
                 <input name={props.name} className="input" type={props.type} placeholder={props.placeHolder} value={props.value} onChange={props.onChange}/>
                 <span key={Math.random()} className="icon is-small is-left">
