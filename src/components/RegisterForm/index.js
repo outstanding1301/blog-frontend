@@ -1,23 +1,22 @@
 import React, { Fragment, useCallback, useMemo, useEffect } from 'react';
-import client from '@lib/client';
-import {salt} from '@src/consts';
-import crypto from 'crypto';
 import './style.scss';
 import { useHistory } from 'react-router-dom';
 import InputAndHint from '@components/common/InputAndHint';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeField, initializeForm } from '@modules/auth';
+import { changeField, initializeForm, register } from '@modules/auth';
 
 const RegisterForm = (props) => {
     const history = useHistory();
     
     const dispatch = useDispatch();
-    // const {form} = useSelector(({auth}) => ({
-    //     form: auth.register
-    // }));
+    const {form, auth, authError } = useSelector(({ auth }) => ({
+        form: auth.register,
+        auth: auth.auth,
+        authError: auth.authError
+    }));
 
-    const form = useSelector(state => state.auth.register);
-    console.log(form);
+    // const form = useSelector(state => state.auth.register);
+    // console.log(form);
 
     const {username, nickname, email, password, passwordConfirm} = form;
 
@@ -102,24 +101,28 @@ const RegisterForm = (props) => {
     }, [nickname]);
 
     const onSubmit = (e) => {
-        let pw = crypto.pbkdf2Sync(password, salt, 112, 64, 'sha512').toString('base64');
-        client.post('/auth/register', {
-            username: username,
-            password: pw,
-            email: email,
-            nickname: nickname,
-        }).then(data => {
-            console.dir(data.data);
-            alert('가입 성공!');
-        }).catch(err => {
-            console.error(err.response.data);
-            alert('가입 실패!');
-        })
+        e.preventDefault();
+        if(checkEmailMemo.length+checkNicknameMemo.length+checkPasswordMemo.length+checkUsernameMemo.length+checkPasswordConfirmMemo.length !== 0) {
+            return;
+        }
+        dispatch(register({username, nickname, email, password}));
     };
 
     useEffect(() => {
         dispatch(initializeForm('register'));
     }, [dispatch]);
+
+    useEffect(() => {
+        if(authError) {
+            console.log('error');
+            console.log(authError);
+            return;
+        }
+        if(auth) {
+            console.log('회원가입 성공')
+            console.log(auth);
+        }
+    }, [auth, authError]);
 
     const onClickLogin = useCallback((e) => {
         history.push('/login');
