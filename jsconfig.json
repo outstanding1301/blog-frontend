@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+      "moduleResolution": "node",
+      "baseUrl": ".",
+      "paths": {
+        "@components/*": ["src/components/*"],
+        "@containers/*": ["src/containers/*"],
+        "@pages/*": ["src/pages/*"],
+        "@modules/*": ["src/modules/*"],
+        "@modules": ["src/modules/index.js"],
+        "@src/*": ["src/*"],
+        "@lib/*": ["src/lib/*"],
+        "@/*": ["./*"]
+      }
+    }
+}

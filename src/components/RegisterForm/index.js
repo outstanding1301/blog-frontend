@@ -1,6 +1,6 @@
 import React, { Fragment, useCallback, useMemo, useEffect } from 'react';
-import axios from 'axios';
-import {api, salt} from '../../consts';
+import client from '../../lib/client';
+import {salt} from '../../consts';
 import crypto from 'crypto';
 import './style.scss';
 import { useHistory } from 'react-router-dom';
@@ -101,15 +101,13 @@ const RegisterForm = (props) => {
         return '';
     }, [nickname]);
 
-    const onClickRegister = (e) => {
+    const onSubmit = (e) => {
         let pw = crypto.pbkdf2Sync(password, salt, 112, 64, 'sha512').toString('base64');
-        axios.post(api+'/auth/register', {
+        client.post('/auth/register', {
             username: username,
             password: pw,
             email: email,
             nickname: nickname,
-        }, {
-            withCredentials: true
         }).then(data => {
             console.dir(data.data);
             alert('가입 성공!');
@@ -149,7 +147,7 @@ const RegisterForm = (props) => {
                     <InputAndHint name="password" label="비밀번호" type="password" value={password} necessary iconLeft="fas fa-key" placeHolder="비밀번호를 입력하세요." memo={checkPasswordMemo} onChange={onHandleChange}/>
                     <InputAndHint name="passwordConfirm" label="비밀번호 확인" type="password" value={passwordConfirm} necessary iconLeft="fas fa-key" placeHolder="비밀번호를 다시 입력하세요." memo={checkPasswordConfirmMemo} onChange={onHandleChange}/>
                     <InputAndHint name="nickname" label="닉네임" type="text" value={nickname} necessary iconLeft="far fa-grin-tongue-squint" placeHolder="닉네임을 입력하세요." memo={checkNicknameMemo} onChange={onHandleChange}/>
-                    <button className={`button is-link register_button`} disabled={checkEmailMemo.length+checkNicknameMemo.length+checkPasswordMemo.length+checkUsernameMemo.length+checkPasswordConfirmMemo.length !== 0} onClick={onClickRegister}>회원가입</button>
+                    <button className={`button is-link register_button`} disabled={checkEmailMemo.length+checkNicknameMemo.length+checkPasswordMemo.length+checkUsernameMemo.length+checkPasswordConfirmMemo.length !== 0} onClick={onSubmit}>회원가입</button>
                 </div>
             </div>
         </Fragment>

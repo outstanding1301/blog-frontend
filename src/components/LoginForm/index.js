@@ -1,8 +1,8 @@
 import React, { Fragment, useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { changeField, initializeForm } from '../../modules/auth';
-import axios from 'axios';
-import {api, salt} from '../../consts';
+import client from '../../lib/client';
+import {salt} from '../../consts';
 import crypto from 'crypto';
 import './style.scss';
 import { useHistory } from 'react-router-dom';
@@ -30,11 +30,9 @@ const LoginForm = (props) => {
 
     const onSubmit = (e) => {
         let pw = crypto.pbkdf2Sync(form.password, salt, 112, 64, 'sha512').toString('base64');
-        axios.post(api+'/auth/login', {
+        client.post('/auth/login', {
             id: form.id,
             password: pw
-        }, {
-            withCredentials: true
         }).then(data => {
             console.log(data.data);
             alert(data.data.data);

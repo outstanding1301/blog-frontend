@@ -1,14 +1,11 @@
 import React from 'react';
 import './style.scss';
-import LoginForm from '../../components/LoginForm';
-import {api, salt} from '../../consts';
-import axios from 'axios';
+import LoginForm from '@components/LoginForm';
+import client from '@lib/client';
 
 function LoginPage() {
   const loginTest = () => {
-    axios.get('http://localhost:8080'+'/test', {
-      withCredentials: true
-    }).then(data => {
+    client.get('/auth/check').then(data => {
         console.log(data.data);
         // alert(data.data);
     }).catch(err => {
