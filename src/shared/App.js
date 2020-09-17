@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route, Switch } from 'react-router-dom';
 import { HomePage, LoginPage, PostListPage, PostPage, RegisterPage, WritePage } from '../pages';
-import ErrorPage from '../pages/ErrorPage';
+import ErrorPage from '@pages/ErrorPage';
 
 
 const App = (props) => {

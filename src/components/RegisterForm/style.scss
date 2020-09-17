@@ -1,13 +1,13 @@
-.register_frame {
+.RegisterForm__register_frame {
     z-index: 11;
     display: inline-block;
     width: 480px;
-    height: 720px;
+    height: 740px;
     background-color: #ffffff;
     box-shadow: 0px 5px 15px #00000050;
 }
 
-.register_background {
+.RegisterForm__register_background {
     position: absolute;
     left: 0;
     top: 0;
@@ -21,17 +21,17 @@
     z-index: 10;
 }
 
-.register_title_container {
+.RegisterForm__register_title_container {
     height: 120px;
 }
 
 
-.register_title_container {
+.RegisterForm__register_title_container {
     position: relative;
     height: 140px;
 }
 
-.register_login {
+.RegisterForm__register_login {
     position: absolute;
     display: inline-block;
     width: 100%;
@@ -44,7 +44,7 @@
     font-size: 14px;
 }
 
-.register_login_link {
+.RegisterForm__register_login_link {
     position: absolute;
     display: inline-block;
     width: 100%;
@@ -57,7 +57,7 @@
     font-size: 18px;
 }
 
-.register_title_text {
+.RegisterForm__register_title_text {
     position: absolute;
     display: inline-block;
     text-align: center;
@@ -70,13 +70,13 @@
     font-size: 28px;
 }
 
-.register_form_container {
+.RegisterForm__register_form_container {
     width: 100%;
     padding-left: 60px;
     padding-right: 60px;
 }
 
-.register_button {
+.RegisterForm__register_button {
     width: 100%;
     padding-left: 60px;
     padding-right: 60px;

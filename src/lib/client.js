@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { api } from '../consts';
+import { api } from '@src/consts';
 
 const client = axios.create();
 

@@ -1,12 +1,12 @@
 import React, { Fragment, useCallback, useMemo, useEffect } from 'react';
-import client from '../../lib/client';
-import {salt} from '../../consts';
+import client from '@lib/client';
+import {salt} from '@src/consts';
 import crypto from 'crypto';
 import './style.scss';
 import { useHistory } from 'react-router-dom';
-import InputAndHint from '../common/InputAndHint';
+import InputAndHint from '@components/common/InputAndHint';
 import { useDispatch, useSelector } from 'react-redux';
-import { changeField, initializeForm } from '../../modules/auth';
+import { changeField, initializeForm } from '@modules/auth';
 
 const RegisterForm = (props) => {
     const history = useHistory();
@@ -133,21 +133,21 @@ const RegisterForm = (props) => {
 
     return (
         <Fragment>
-            <div className="register_background"></div>
-            <div className="register_frame">
-                <div className="register_title_container">
-                    <p className="register_login">이미 계정이 있으세요?</p>
-                    <a href="/login" className="register_login_link">로그인 <i className="fas fa-angle-right"></i></a>
-                    <h2 className="register_title_text">회원가입</h2>
+            <div className="RegisterForm__register_background"></div>
+            <div className="RegisterForm__register_frame">
+                <div className="RegisterForm__register_title_container">
+                    <p className="RegisterForm__register_login">이미 계정이 있으세요?</p>
+                    <a href="/login" className="RegisterForm__register_login_link">로그인 <i className="fas fa-angle-right"></i></a>
+                    <h2 className="RegisterForm__register_title_text">회원가입</h2>
                 </div>
 
-                <div className="register_form_container">
+                <div className="RegisterForm__register_form_container">
                     <InputAndHint name="email" label="E-mail" type="text" value={email} necessary iconLeft="fas fa-envelope" placeHolder="E-mail을 입력하세요." memo={checkEmailMemo} onChange={onHandleChange}/>
                     <InputAndHint name="username" label="Username" type="text" value={username} necessary iconLeft="fas fa-user" placeHolder="Username을 입력하세요." memo={checkUsernameMemo} onChange={onHandleChange}/>
                     <InputAndHint name="password" label="비밀번호" type="password" value={password} necessary iconLeft="fas fa-key" placeHolder="비밀번호를 입력하세요." memo={checkPasswordMemo} onChange={onHandleChange}/>
                     <InputAndHint name="passwordConfirm" label="비밀번호 확인" type="password" value={passwordConfirm} necessary iconLeft="fas fa-key" placeHolder="비밀번호를 다시 입력하세요." memo={checkPasswordConfirmMemo} onChange={onHandleChange}/>
                     <InputAndHint name="nickname" label="닉네임" type="text" value={nickname} necessary iconLeft="far fa-grin-tongue-squint" placeHolder="닉네임을 입력하세요." memo={checkNicknameMemo} onChange={onHandleChange}/>
-                    <button className={`button is-link register_button`} disabled={checkEmailMemo.length+checkNicknameMemo.length+checkPasswordMemo.length+checkUsernameMemo.length+checkPasswordConfirmMemo.length !== 0} onClick={onSubmit}>회원가입</button>
+                    <button className="RegisterForm__register_button button is-link register_button" disabled={checkEmailMemo.length+checkNicknameMemo.length+checkPasswordMemo.length+checkUsernameMemo.length+checkPasswordConfirmMemo.length !== 0} onClick={onSubmit}>회원가입</button>
                 </div>
             </div>
         </Fragment>
