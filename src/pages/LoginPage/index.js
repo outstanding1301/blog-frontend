@@ -1,26 +1,15 @@
 import React from 'react';
 import './style.scss';
-import LoginForm from '@components/LoginForm';
-import client from '@lib/client';
+import LoginFormContainer from '@containers/LoginFormContainer';
+import Header from '@components/common/Header';
 
 function LoginPage() {
-  const loginTest = () => {
-    client.get('/auth/check').then(data => {
-        console.log(data.data);
-        // alert(data.data);
-    }).catch(err => {
-        console.error(err);
-        if(err.response)
-            alert(err.response.data);
-        else
-            alert(err);
-    })
-  }
-
   return (
-    <div className="LoginPage">
-        <button className="button is-link" onClick={loginTest}>로그인 테스트</button>
-        <LoginForm />
+    <div>
+      <Header />
+      <div className="LoginPage">
+          <LoginFormContainer />
+      </div>
     </div>
   );
 }

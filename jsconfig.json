@@ -10,6 +10,7 @@
         "@modules": ["src/modules/index.js"],
         "@src/*": ["src/*"],
         "@lib/*": ["src/lib/*"],
+        "@scss/*": ["src/scss/*"],
         "@/*": ["./*"]
       }
     }

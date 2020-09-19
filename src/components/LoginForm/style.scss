@@ -1,3 +1,5 @@
+@import "../../scss/main";
+
 .LoginForm__login_frame {
     z-index: 11;
     display: inline-block;
@@ -5,6 +7,15 @@
     height: 480px;
     background-color: #ffffff;
     box-shadow: 0px 5px 15px #00000050;
+}
+
+.LoginForm__login_frame_small {
+    z-index: 11;
+    display: inline-block;
+    width: 360px;
+    height: 320px;
+    background-color: #ffffff;
+    box-shadow: 0px 5px 8px #0000001e;
 }
 
 .LoginForm__login_background {
@@ -50,6 +61,27 @@
     right: 20px;
     font-weight: bold;
     font-size: 18px;
+    color: $color-primary;
+}
+
+.LoginForm__login_register_small {
+    display: inline-block;
+    text-align: end;
+    margin: 0;
+    padding: 0;
+    font-weight: normal;
+    font-size: 14px;
+    color: #464646;
+}
+.LoginForm__login_register_link_small {
+    display: inline-block;
+    text-align: end;
+    margin: 0;
+    padding: 0;
+    margin-left: 10px;
+    font-weight: bold;
+    font-size: 18px;
+    color: $color-primary;
 }
 
 .LoginForm__login_title_text {
@@ -70,10 +102,31 @@
     padding-left: 60px;
     padding-right: 60px;
 }
+.LoginForm__login_form_container_small {
+    width: 100%;
+    padding-top: 30px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
 
 .LoginForm__login_button {
     width: 100%;
     padding-left: 60px;
     padding-right: 60px;
     margin-top: 30px;
+}
+.LoginForm__login_button_small {
+    width: 100%;
+    padding-left: 60px;
+    padding-right: 60px;
+    margin-top: 15px;
+}
+
+.LoginForm__register_div {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    align-items: center;
+    width: 100%;
+    margin-top: 10px;
 }

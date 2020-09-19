@@ -20,3 +20,5 @@ export const register = ({username, password, email, nickname}) => {
 }
 
 export const check = () => client.get('/auth/check');
+
+export const logout = () => client.post('/auth/logout');
