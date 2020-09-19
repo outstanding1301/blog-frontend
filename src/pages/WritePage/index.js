@@ -1,11 +1,12 @@
 import React from 'react';
 import Header from '@components/common/Header';
+import Editor from '@components/common/Editor';
 
 const WritePage = (props) => {
     return (
-        <div>
+        <div style={{height:"100vh"}}>
             <Header/>
-            <div>글쓰기 페이지</div>
+            <Editor/>
         </div>
     )
 }

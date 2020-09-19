@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import './style.scss';
 import { useDispatch, useSelector } from 'react-redux';
+import { useHistory } from 'react-router-dom';
 import LoginFormContainer from '@containers/LoginFormContainer';
 import { logout } from '@modules/user';
 
 const Header = () => {
+    const history = useHistory();
     const {user} = useSelector(({user}) => ({
         user: user.user
     }));
@@ -12,9 +14,13 @@ const Header = () => {
     const dispatch = useDispatch();
 
     const [formOpen, setFormOpen] = useState(false);
+
     const onLogout = () => {
         dispatch(logout());
         alert("로그아웃 되었습니다.");
+    }
+    const onClickLogo = () => {
+        history.push('/');
     }
 
     useEffect(()=>{
@@ -29,7 +35,7 @@ const Header = () => {
             <div className="header__loginForm" style={{visibility: user ? "hidden" : "visible"}}>
                 <LoginFormContainer size="small" />
             </div>}
-            <h1 className="header__logo cant_drag">outstargram<i className="fas fa-comment-dots header__icon"></i></h1>
+            <h1 className="header__logo cant_drag" onClick={onClickLogo}>outstargram<i className="fas fa-comment-dots header__icon"></i></h1>
             <div className="header__userInfo">
                 {user && (
                     <>

@@ -3,8 +3,8 @@
 .header__header{
     display: flex;
     width: 100vw;
-    height: 48px;
-    position: fixed;
+    height: $header_height;
+    position: sticky;
     justify-content: space-between;
     align-items: center;
     top: 0;
@@ -64,6 +64,6 @@
 .header__loginForm {
     position: absolute;
     z-index: 100;
-    top: 49px;
+    top: $header_height+1px;
     right: 0;
 }
