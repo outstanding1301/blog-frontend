@@ -3,17 +3,17 @@ import './style.scss';
 import Quill from 'quill';
 import 'quill/dist/quill.bubble.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { writePost, changeField, initializeEditor } from '@modules/post';
+import { writePost, changeField, initializePost } from '@modules/post';
 import { useHistory } from 'react-router-dom';
 
 const Editor = () => {
     const history = useHistory();
 
     const dispatch = useDispatch();
-    const {user, post, postError, title, contents} = useSelector(({user, post}) => ({
+    const {user, post, writePostError, title, contents} = useSelector(({user, post}) => ({
         user: user.user,
-        post: post.post,
-        postError: post.postError,
+        post: post.writePost,
+        writePostError: post.writePostError,
         title: post.title,
         contents: post.contents,
     }));
@@ -30,20 +30,21 @@ const Editor = () => {
 
     useEffect(()=>{
         return ()=>{
-            dispatch(initializeEditor());
+            dispatch(initializePost());
         }
     }, [dispatch])
 
     useEffect(() => {
-        if(postError) {
-            console.log(postError);
+        if(writePostError) {
+            console.log(writePostError);
             return;
         }
         if(post) {
             console.log(post);
-            history.push('/@'+user.username+'/'+post.payload.data.id);
+            history.push('/@'+user.username+'/'+post.id);
+            dispatch(initializePost());
         }
-    }, [post, postError]);
+    }, [post, writePostError]);
 
     useEffect(()=>{
         quillInstance.current = new Quill(quillElement.current, {
@@ -75,9 +76,21 @@ const Editor = () => {
     return (
         <div className="editor__container">
                 <div className="editor__postButton">
-                    <div className="postButton" onClick={onPost}>
-                        <i className="fas fa-pencil-alt cant_drag"></i>
-                    </div>
+                    {(()=>
+                        title.length === 0 || contents.length === 0 || contents === '<p><br></p>'
+                        ?
+                        (
+                        <div className="postButton__disabled">
+                            <i className="fas fa-pencil-alt cant_drag"></i>
+                        </div>
+                        )
+                        :
+                        (
+                        <div className="postButton" onClick={onPost}>
+                            <i className="fas fa-pencil-alt cant_drag"></i>
+                        </div>
+                        )
+                    )()}
                 </div>
                 <div className="editor__input_title_container">
                     <input className="editor__input_title" type="text" placeholder="제목을 입력하세요." onChange={onChangeTitle} value={title}/>

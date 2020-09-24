@@ -1,0 +1,146 @@
+@import "../../../scss/main.scss";
+
+.Post__container {
+    position: relative;
+    width: 100%;
+    min-height: 150px;
+}
+
+.Post__container__fold {
+    position: relative;
+    width: 100%;
+    max-height: 500px;
+    min-height: 200px;
+    overflow: hidden;
+}
+
+.Post__unfold {
+    position: absolute;
+    bottom: 0px;
+    left:0px;
+    width: 100%;
+    height: calc(100% - 60px);
+}
+
+.Post__unfold:hover .Post__unfold_gradation {
+    // height: 100px;
+    animation:Post__unfold_gradation_hover .3s ease-in both;
+}
+
+.Post__unfold:hover .Post__unfold_hint {
+    animation:Post__unfold_hint_hover .5s ease-in both;
+}
+
+@keyframes Post__unfold_gradation_hover {
+    0% {
+        height: 160px;
+        opacity: 1;
+    }
+    100% {
+        height: 100px;
+        opacity: 0.8;
+    }
+}
+
+@keyframes Post__unfold_hint_hover {
+    0% {
+        opacity: 0;
+        bottom: 15px;
+    }
+    100% {
+       opacity: 1;
+       bottom: 5px;
+    }
+}
+
+
+.Post__unfold_gradation {
+    position: absolute;
+    bottom: 0px;
+    left:0px;
+    width: 100%;
+    height: 160px;
+    background: linear-gradient( to bottom, #ffffff00, #999999de );
+}
+
+.Post__unfold_hint {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    bottom: 15px;
+    font-size: 24px;
+}
+
+.Post__title_container {
+    width: 100%;
+    height: 60px;
+    margin-top: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
+    justify-content: center;
+    align-items: center;
+}
+
+.Post__title {
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    font-size: 42px;
+}
+.Post__date {
+    display: inline-block;
+    font-size: 16px;
+    margin: 0;
+    color: #858585;
+}
+
+.Post__author {
+    display: inline-block;
+    font-size: 16px;
+    margin: 0;
+
+    .Post__postby {
+        font-style: italic;
+        color: #7c7c7c;
+        margin-right: 5px;
+    }
+
+    .Post__nickname {
+        color: #5a5a5a;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    .Post__username {
+        color: $color-primary;
+        cursor: pointer;
+        font-weight: bold;
+    }
+}
+
+.Post__description {
+    width: 100%;
+    display: flex;
+    margin-top: 10px;
+    margin-left: 10px;
+    justify-content: space-between;
+}
+
+.Post__body {
+    margin-top: 30px;
+    // margin-left: 20px;
+}
+
+.Post__body > p {
+    font-size: 21px !important;
+    margin-bottom: 5px;
+    margin-top: 5px;
+}
+.Post__body > h2 {
+    font-size: 30px !important;
+}
+.Post__body > h1 {
+    font-size: 42px !important;
+}

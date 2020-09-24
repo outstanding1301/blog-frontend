@@ -24,7 +24,7 @@ const RegisterFormContainer = (props) => {
             if(e.target.value.length > 15) return;
         }
         else if(e.target.name === 'nickname') {
-            if(e.target.value.length > 15) return;
+            if(e.target.value.length > 6) return;
         }
         else if(e.target.name === 'email') {
             if(e.target.value.length > 50) return;

@@ -1,0 +1,23 @@
+@import '../../../scss/main.scss';
+
+.Comment {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    font-size: 16px;
+}
+
+
+.Comment__author_nickname {
+    font-weight: bold;
+    color: $color-nickname;
+}
+
+.Comment__author_username {
+    font-weight: bold;
+    color: $color-username;
+}
+
+.Comment__content {
+    margin-left: 10px;
+    font-size: 16px;
+}

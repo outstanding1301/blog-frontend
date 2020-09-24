@@ -1,11 +1,14 @@
 import React from 'react';
 import Header from '@components/common/Header';
+import PostsContainer from '@containers/PostsContainer';
 
-const PostListPage = (props) => {
+const PostListPage = ({match}) => {
+    const {params} = match;
     return (
         <div>
             <Header />
-            글목록 페이지
+            <h1>User : {params.username}</h1>
+            <PostsContainer author={params.username}/>
         </div>
     )
 }

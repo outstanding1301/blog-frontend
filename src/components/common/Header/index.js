@@ -22,6 +22,12 @@ const Header = () => {
     const onClickLogo = () => {
         history.push('/');
     }
+    const onWritePost = () => {
+        history.push('/write');
+    }
+    const onClickProfile = () => {
+        history.push('/@'+user.username);
+    }
 
     useEffect(()=>{
         if(user) {
@@ -39,7 +45,8 @@ const Header = () => {
             <div className="header__userInfo">
                 {user && (
                     <>
-                    <p key={Math.random()} className="header__userName">
+                    <p className="header__button cant_drag" onClick={onWritePost}>글쓰기</p>
+                    <p key={Math.random()} className="header__userName" onClick={onClickProfile}>
                         <span className="header__userName_nickname">{user.nickname}</span>
                         <span className="header__userName_username">@{user.username}</span>
                     </p>

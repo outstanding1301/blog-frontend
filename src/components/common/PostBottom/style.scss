@@ -1,0 +1,18 @@
+@import "../../../scss/main.scss";
+
+.Post__bottomContainer {
+    margin-top: 30px;
+    // max-height: 112px;
+    min-height: 32px;
+}
+
+.Post__bottomItems {
+    display: flex;
+    height: 32px;
+    justify-content: space-between;
+}
+
+.Post__comment_container {
+    margin-top: 10px;
+    margin-left: 5px;
+}

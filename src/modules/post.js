@@ -6,8 +6,10 @@ import * as postAPI from '@lib/api/post';
 import createRequestSaga, { createRequestActionTypes } from '@lib/createRequestSaga';
 
 const CHANGE_FIELD = 'post/CHANGE_FIELD';
-const INITIALIZE_EDITOR = 'post/INITIALIZE_EDITOR';
 const [WRITE_POST, WRITE_POST_SUCCESS, WRITE_POST_FAILURE] = createRequestActionTypes('post/WRITE_POST');
+const [GET_POST, GET_POST_SUCCESS, GET_POST_FAILURE] = createRequestActionTypes('post/GET_POST');
+const [GET_POSTS, GET_POSTS_SUCCESS, GET_POSTS_FAILURE] = createRequestActionTypes('post/GET_POSTS');
+const INITIALIZE_POST = 'post/INITIALIZE_POST';
 
 export const changeField = createAction(CHANGE_FIELD,
     ({ key, value }) => {
@@ -17,19 +19,29 @@ export const changeField = createAction(CHANGE_FIELD,
     }
 );
 
-export const initializeEditor = createAction(INITIALIZE_EDITOR);
+export const initializePost = createAction(INITIALIZE_POST);
 
 export const writePost = createAction(WRITE_POST, ({title, contents}) => ({title, contents}));
+export const getPost = createAction(GET_POST, ({id, author}) => ({id, author}));
 
-const writePostSaga = createRequestSaga(WRITE_POST, postAPI.post);
+export const getPosts = createAction(GET_POSTS, ({author}) => ({author}));
+
+const writePostSaga = createRequestSaga(WRITE_POST, postAPI.writePost);
+const getPostSaga = createRequestSaga(GET_POST, postAPI.getPost);
+const getPostsSaga = createRequestSaga(GET_POSTS, postAPI.getPosts);
 
 export function* postSaga() {
     yield takeLatest(WRITE_POST, writePostSaga);
+    yield takeLatest(GET_POST, getPostSaga);
+    yield takeLatest(GET_POSTS, getPostsSaga);
 }
 
 const initialState = {
     post: null,
+    posts: [],
     postError: null,
+    writePost: null,
+    writePostError: null,
     title: '',
     contents: '',
 }
@@ -42,16 +54,42 @@ const postReducer = handleActions(
                 [key]: value,
             }
         },
-        [INITIALIZE_EDITOR]: state => initialState
-        ,
+        [INITIALIZE_POST]: state => ({
+            ...state,
+            post: null,
+            postError: null,
+            writePost: null,
+            writePostError: null,
+            title: '',
+            contents: '',
+        }),
         [WRITE_POST_FAILURE]: (state, payload) => ({
+            ...state,
+            writePost: null,
+            writePostError: payload
+        }),
+        [WRITE_POST_SUCCESS]: (state, {payload: post}) => ({
+            ...state,
+            writePost: post,
+            writePostError: null
+        }),
+        [GET_POST_FAILURE]: (state, payload) => ({
             ...state,
             post: null,
             postError: payload
         }),
-        [WRITE_POST_SUCCESS]: (state, payload) => ({
+        [GET_POST_SUCCESS]: (state, {payload: post}) => ({
             ...state,
-            post: payload,
+            post: post,
+            postError: null,
+        }),
+        [GET_POSTS_FAILURE]: (state, payload) => ({
+            ...state,
+            postError: payload
+        }),
+        [GET_POSTS_SUCCESS]: (state, {payload: posts}) => ({
+            ...state,
+            posts: posts,
             postError: null,
         }),
     }, initialState

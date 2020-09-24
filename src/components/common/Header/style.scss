@@ -26,6 +26,7 @@
     font-size: 20px;
     margin: 0;
     padding: 0;
+    padding-left: 20px;
     font-weight: bold;
     color: $color-primary;
 }
@@ -49,6 +50,7 @@
 .header__userInfo {
     display: flex;
     align-items: center;
+    padding-right: 20px;
 }
 
 .header__userName_nickname {
