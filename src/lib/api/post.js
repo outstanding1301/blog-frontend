@@ -13,10 +13,19 @@ export const getPost = ({id, author}) => {
         }
     });
 }
-export const getPosts = ({author}) => {
+
+export const deletePost = ({id}) => {
+    return client.delete('/post', {
+        params: {
+            id
+        }
+    });
+}
+
+export const getPosts = ({author, limit, isNew, id}) => {
     return client.get('/posts', {
         params: {
-            author
+            author, limit, isNew, id
         }
     });
 }

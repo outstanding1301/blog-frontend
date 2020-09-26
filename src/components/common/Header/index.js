@@ -4,11 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import LoginFormContainer from '@containers/LoginFormContainer';
 import { logout } from '@modules/user';
+import { getNewPosts } from '@modules/posts';
 
-const Header = () => {
+const Header = ({preEffect}) => {
     const history = useHistory();
-    const {user} = useSelector(({user}) => ({
-        user: user.user
+    const {user, newestPostId} = useSelector(({user, posts}) => ({
+        user: user.user,
+        newestPostId: posts.newestPostId
     }));
 
     const dispatch = useDispatch();
@@ -20,7 +22,18 @@ const Header = () => {
         alert("로그아웃 되었습니다.");
     }
     const onClickLogo = () => {
-        history.push('/');
+        if(preEffect) {
+            preEffect();
+        }
+        if(history.location.pathname == '/') {
+            if(newestPostId)
+                dispatch(getNewPosts(newestPostId, {author: undefined}));
+            else
+                window.location.href = '/';
+        }
+        else {
+            history.push('/');
+        }
     }
     const onWritePost = () => {
         history.push('/write');

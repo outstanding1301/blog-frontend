@@ -7,9 +7,10 @@ import createRequestSaga, { createRequestActionTypes } from '@lib/createRequestS
 
 const CHANGE_FIELD = 'post/CHANGE_FIELD';
 const [WRITE_POST, WRITE_POST_SUCCESS, WRITE_POST_FAILURE] = createRequestActionTypes('post/WRITE_POST');
+const [DELETE_POST, DELETE_POST_SUCCESS, DELETE_POST_FAILURE] = createRequestActionTypes('post/DELETE_POST');
 const [GET_POST, GET_POST_SUCCESS, GET_POST_FAILURE] = createRequestActionTypes('post/GET_POST');
-const [GET_POSTS, GET_POSTS_SUCCESS, GET_POSTS_FAILURE] = createRequestActionTypes('post/GET_POSTS');
 const INITIALIZE_POST = 'post/INITIALIZE_POST';
+const SET_POST = 'post/SET_POST';
 
 export const changeField = createAction(CHANGE_FIELD,
     ({ key, value }) => {
@@ -22,26 +23,27 @@ export const changeField = createAction(CHANGE_FIELD,
 export const initializePost = createAction(INITIALIZE_POST);
 
 export const writePost = createAction(WRITE_POST, ({title, contents}) => ({title, contents}));
+export const deletePost = createAction(DELETE_POST, ({id}) => ({id}));
 export const getPost = createAction(GET_POST, ({id, author}) => ({id, author}));
-
-export const getPosts = createAction(GET_POSTS, ({author}) => ({author}));
+export const setPost = createAction(SET_POST, (post) => (post));
 
 const writePostSaga = createRequestSaga(WRITE_POST, postAPI.writePost);
 const getPostSaga = createRequestSaga(GET_POST, postAPI.getPost);
-const getPostsSaga = createRequestSaga(GET_POSTS, postAPI.getPosts);
+const deletePostSaga = createRequestSaga(DELETE_POST, postAPI.deletePost);
 
 export function* postSaga() {
     yield takeLatest(WRITE_POST, writePostSaga);
     yield takeLatest(GET_POST, getPostSaga);
-    yield takeLatest(GET_POSTS, getPostsSaga);
+    yield takeLatest(DELETE_POST, deletePostSaga);
 }
 
 const initialState = {
     post: null,
-    posts: [],
     postError: null,
     writePost: null,
     writePostError: null,
+    deletePost: false,
+    deletePostError: null,
     title: '',
     contents: '',
 }
@@ -60,6 +62,8 @@ const postReducer = handleActions(
             postError: null,
             writePost: null,
             writePostError: null,
+            deletePost: false,
+            deletePostError: null,
             title: '',
             contents: '',
         }),
@@ -83,13 +87,19 @@ const postReducer = handleActions(
             post: post,
             postError: null,
         }),
-        [GET_POSTS_FAILURE]: (state, payload) => ({
+        [DELETE_POST_FAILURE]: (state, payload) => ({
             ...state,
-            postError: payload
+            deletePost: false,
+            deletePostError: payload
         }),
-        [GET_POSTS_SUCCESS]: (state, {payload: posts}) => ({
+        [DELETE_POST_SUCCESS]: (state, {payload: post}) => ({
             ...state,
-            posts: posts,
+            deletePost: true,
+            deletePostError: null
+        }),
+        [SET_POST]: (state, {payload: post}) => ({
+            ...state,
+            post: post,
             postError: null,
         }),
     }, initialState

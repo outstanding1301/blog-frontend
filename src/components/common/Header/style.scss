@@ -54,13 +54,13 @@
 }
 
 .header__userName_nickname {
-    color: #464646;
-    font-size: 17px;
+    color: $color-nickname;
+    font-size: $size-large;
 }
 
 .header__userName_username {
-    color: #858585;
-    font-size: 15px;
+    color: $color-username;
+    font-size: $size-small;
 }
 
 .header__loginForm {

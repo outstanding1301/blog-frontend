@@ -17,7 +17,8 @@ export default function createRequestSaga(type, request) {
             const response = yield call(request, action.payload); // request 액션 실행 (with payload)
             yield put({ // 요청 성공시 리듀서 호출
                 type: SUCCESS,
-                payload: response.data
+                payload: response.data,
+                meta: response,
             });
         }
         catch (e) {
