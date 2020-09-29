@@ -7,6 +7,9 @@ import createRequestSaga, { createRequestActionTypes } from '@lib/createRequestS
 const [GET_POSTS, GET_POSTS_SUCCESS, GET_POSTS_FAILURE] = createRequestActionTypes('posts/GET_POSTS');
 const INITIALIZE_POSTS = 'posts/INITIALIZE_POSTS';
 
+const GET_POST_SUCCESS = 'post/GET_POST_SUCCESS';
+const DELETE_POST_SUCCESS = 'post/DELETE_POST_SUCCESS';
+
 export const initializePosts = createAction(INITIALIZE_POSTS);
 
 export const getPosts = createAction(GET_POSTS, ({author, isNew, id, limit}) => ({author, isNew, id, limit}));
@@ -42,6 +45,19 @@ const postsReducer = handleActions(
             newestPostId: state.newestPostId === null ? posts[0] ? posts[0].id : null : Math.max(state.newestPostId, posts[0] ? posts[0].id : 0),
             oldestPostId: state.oldestPostId === null ? posts[posts.length-1] ? posts[posts.length-1].id : null : Math.min(state.oldestPostId, posts[posts.length-1] ? posts[posts.length-1].id : Number.MAX_VALUE),
         }),
+        [DELETE_POST_SUCCESS]: (state, {payload: id}) => ({
+            ...state,
+            posts: state.posts.filter(p => p.id != id),
+        }),
+        [GET_POST_SUCCESS]: (state, {payload: post}) => {
+            return {
+                ...state,
+                posts: state.posts.map(p => {
+                    if(p.id == post.id) return post;
+                    return p;
+                })
+            }
+        },
     }, initialState
 );
 

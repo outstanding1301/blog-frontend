@@ -7,7 +7,7 @@ const PostPage = ({match}) => {
     return (
         <div>
             <Header/>
-            <PostContainer id={params.postId} author={params.username} inPage={true}/>
+            <PostContainer id={params.postId} author={params.id} inPage={true}/>
         </div>
     )
 }
