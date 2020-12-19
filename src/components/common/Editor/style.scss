@@ -18,8 +18,8 @@
     width: calc(100% - 40px);
     height: 60px;
     margin-top: 10px;
-    margin-left: 20px;
-    margin-right: 20px;
+    margin-left: 30px;
+    margin-right: 30px;
 }
 
 .editor__input_title {
@@ -37,12 +37,15 @@
 
 .editor__editor {
     flex: 1;
-    width: 100%;
     overflow: scroll;
     padding-top: 10px;
+    margin-left: 20px;
+    margin-right: 20px;
+    margin-bottom: 20px;
 }
 
-.editor__postButton {
+.editor__buttons {
+    display: flex;
     position: absolute;
     right: 20px;
     bottom: 20px;
@@ -79,6 +82,10 @@
     opacity: 0.5;
 }
 
+.ql-editor {
+    z-index: 999;
+}
+
 .ql-editor > p {
     font-size: 21px !important;
 }
@@ -93,3 +100,53 @@
     font-size: 21px !important; 
 }
 
+.ql-editor > ol {
+    font-size: 21px !important;
+}
+
+.ql-editor > ul {
+    font-size: 21px !important;
+}
+
+.ql-editor > blockquote {
+    font-size: 21px !important;
+}
+
+.ql-editor > pre {
+    font-size: 21px !important;
+}
+
+.editor__tools {
+    display: flex;
+    margin-right: 20px;
+    margin-left: 20px;
+    
+    .editor__tools_tool {
+        width: 3rem;
+        height: 3rem;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.3rem;
+        flex-shrink: 0;
+        background: none;
+        outline: none;
+        padding: 0;
+        border: none;
+        color: rgb(134, 142, 150);
+        cursor: pointer;
+
+        div {
+            font-weight: bold;
+            span {
+                font-size: 1rem;
+                font-weight: bolder;
+            }
+        }
+
+        &:hover {
+            background: rgb(228, 228, 228);
+            color: rgb(51, 51, 51);
+        }
+    }
+}

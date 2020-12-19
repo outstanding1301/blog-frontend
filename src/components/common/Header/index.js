@@ -22,18 +22,19 @@ const Header = ({preEffect}) => {
         alert("로그아웃 되었습니다.");
     }
     const onClickLogo = () => {
-        if(preEffect) {
-            preEffect();
-        }
-        if(history.location.pathname == '/') {
-            if(newestPostId)
-                dispatch(getNewPosts(newestPostId, {author: undefined}));
-            else
-                window.location.href = '/';
-        }
-        else {
-            history.push('/');
-        }
+        window.location.href = '/';
+        // if(preEffect) {
+        //     preEffect();
+        // }
+        // if(history.location.pathname == '/') {
+        //     if(newestPostId)
+        //         dispatch(getNewPosts(newestPostId, {author: undefined}));
+        //     else
+        //         window.location.href = '/';
+        // }
+        // else {
+        //     history.push('/');
+        // }
     }
     const onWritePost = () => {
         history.push('/write');
