@@ -48,9 +48,16 @@ const PostsContainer = ({author}) => {
     }, [posts, postsError]);
 
     return (
-        (posts.length > 0 && 
+        <>
+        {
+            posts.length > 0 && 
             <Posts posts={posts}/>
-        )
+        }
+        {
+            posts.length == 0 &&
+            <h1>글이 없습니다.</h1>
+        }
+        </>
     );
 }
 

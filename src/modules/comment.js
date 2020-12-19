@@ -40,7 +40,6 @@ export function* commentSaga() {
 }
 
 const initialState = {
-    comment: '',
     writeComment: null,
     writeCommentError: null,
     comments: [],

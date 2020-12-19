@@ -1,8 +1,9 @@
-import React, { useEffect, useMemo } from 'react';
+import React from 'react';
+import './style.scss';
 import Header from '@components/common/Header';
 import PostsContainer from '@containers/PostsContainer';
 import { initializePosts } from '@modules/posts';
-import { batch, useDispatch } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { usePreEffect } from '@src/lib/Hooks';
 
 const PostListPage = ({match}) => {
@@ -14,10 +15,12 @@ const PostListPage = ({match}) => {
     });
 
     return (
-        <div>
+        <div className="PostListPage">
             <Header preEffect={()=>{dispatch(initializePosts())}}/>
             <h1>User : {params.username}</h1>
-            <PostsContainer author={params.username}/>
+            <div className="PostListPage__Posts">
+                <PostsContainer author={params.username}/>
+            </div>
         </div>
     )
 }
