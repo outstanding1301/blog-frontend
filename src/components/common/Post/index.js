@@ -2,13 +2,9 @@ import React, { createRef, useEffect, useState } from 'react';
 import './style.scss';
 import DateParser from '@src/lib/DateParser';
 import { Link, useHistory } from 'react-router-dom';
-import Like from '@components/common/LikeButton';
-import CommentButton from '@components/common/CommentButton';
-import BookmarkButton from '@components/common/BookmarkButton';
-import Comment from '@components/common/Comment';
+import PostBottom from '../PostBottom';
 
 const Post = ({post, inPage, onDelete}) => {
-    console.log("render post");
     const history = useHistory();
     const elemBody = createRef(null);
     const {title, nickname, username, contents, postedDate, updatedDate} = post;
@@ -17,8 +13,7 @@ const Post = ({post, inPage, onDelete}) => {
     // const [updatedAt, setUpdatedAt] = useState(DateParser(updatedDate));
 
     const [fold, setFold] = useState(false);
-    const [like, setLike] = useState(false);
-
+    
     useEffect(()=>{
         const elemInstance = elemBody.current;
         elemInstance.innerHTML = contents;
@@ -40,11 +35,6 @@ const Post = ({post, inPage, onDelete}) => {
 
     const onClickAuthor = () => {
         history.push('/@'+username);
-    }
-
-    const onLikeChange = (val) => {
-        console.log(val);
-        setLike(val);
     }
 
     return (
@@ -75,8 +65,28 @@ const Post = ({post, inPage, onDelete}) => {
                 <span className="Post__username" onClick={onClickAuthor}>@{username}</span></p>
                 <p className="Post__date">{postedAt}</p>
             </div>
-            <button className="Post__delete" onClick={onDelete}>삭제</button>
             <div className="Post__body" ref={elemBody}></div>
+            <div className="Post__buttons">
+                    {(()=>
+                        onDelete
+                        ?
+                        (
+                        <>
+                        <div className="Post__editButton" onClick={()=>{}}>
+                            <i className="fas fa-edit cant_drag"></i>
+                        </div>
+                        <div className="Post__deleteButton" onClick={onDelete}>
+                            <i className="fas fa-trash cant_drag"></i>
+                        </div>
+                        </>
+                        )
+                        :
+                        (
+                            <></>
+                        )
+                    )()}
+                </div>
+                <PostBottom post={post}/>
         </div>
     );
 }

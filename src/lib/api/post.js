@@ -6,10 +6,10 @@ export const writePost = ({title, contents}) => {
     });
 }
 
-export const getPost = ({id, author}) => {
+export const getPost = ({id}) => {
     return client.get('/post', {
         params: {
-            id, author
+            id
         }
     });
 }

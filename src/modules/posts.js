@@ -10,7 +10,11 @@ const INITIALIZE_POSTS = 'posts/INITIALIZE_POSTS';
 const GET_POST_SUCCESS = 'post/GET_POST_SUCCESS';
 const DELETE_POST_SUCCESS = 'post/DELETE_POST_SUCCESS';
 
+const UPDATE_POST = 'post/UPDATE_POST';
+
 export const initializePosts = createAction(INITIALIZE_POSTS);
+
+export const updatePost = createAction(UPDATE_POST, (post) => (post));
 
 export const getPosts = createAction(GET_POSTS, ({author, isNew, id, limit}) => ({author, isNew, id, limit}));
 export const getNewPosts = (newestPostId, {author}) => getPosts({author, isNew: true, id: newestPostId, limit: 10});
@@ -58,6 +62,10 @@ const postsReducer = handleActions(
                 })
             }
         },
+        [UPDATE_POST]: (state, {payload: post}) => ({
+            ...state,
+            posts: state.posts.map(p => p.id == post.id ? post : p),
+        }),
     }, initialState
 );
 

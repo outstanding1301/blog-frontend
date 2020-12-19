@@ -40,7 +40,7 @@ const PostContainer = ({id, author, inPage, storedPost}) => {
         }
         else {
             console.log("3");
-            dispatch(getPost({id, author}));
+            dispatch(getPost({id}));
         }
         return ()=>{
             dispatch(initializePost());

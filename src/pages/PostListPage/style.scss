@@ -1,0 +1,13 @@
+.PostListPage {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.PostListPage__Posts {
+    width: 70%;
+    min-width: 420px;
+    max-width: 720px;
+}

@@ -31,7 +31,7 @@ export const initializePost = createAction(INITIALIZE_POST);
 
 export const writePost = createAction(WRITE_POST, ({title, contents}) => ({title, contents}));
 export const deletePost = createAction(DELETE_POST, ({id}) => ({id}));
-export const getPost = createAction(GET_POST, ({id, author}) => ({id, author}));
+export const getPost = createAction(GET_POST, ({id}) => ({id}));
 export const setPost = createAction(SET_POST, (post) => (post));
 
 export const setDeletePost = createAction(SET_DELETE_POST, (deleted) => (deleted));
